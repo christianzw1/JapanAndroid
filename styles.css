@@ -255,6 +255,21 @@ button.sticky {
 .unknown-word {
     display: block;
     margin-bottom: 5px;
+.dictionary-popup {
+    position: fixed;
+    bottom: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0,0,0,0.9);
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    z-index: 1100;
+    max-width: 80%;
+    display: none;
+}
+.dictionary-popup.show {
+    display: block;
 }
 
 .modal {
