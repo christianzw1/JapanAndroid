@@ -453,3 +453,18 @@ button.sticky {
 ol {
     list-style-type: none;
 }
+
+.dictionary-sentence {
+    font-style: italic;
+    margin-bottom: 10px;
+}
+
+#fields-container label {
+    display: block;
+    margin-top: 10px;
+}
+
+#fields-container select {
+    width: 100%;
+    margin-bottom: 5px;
+}
