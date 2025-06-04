@@ -554,3 +554,10 @@ document.addEventListener('click', (event) => {
 menuOptions.addEventListener('click', (event) => {
     event.stopPropagation();
 });
+
+subtitleList.addEventListener('dblclick', () => {
+    const selection = window.getSelection().toString().trim();
+    if (selection) {
+        showDictionary(selection);
+    }
+});

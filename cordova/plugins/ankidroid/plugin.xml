@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="cordova-plugin-ankidroid" version="0.1.0" xmlns="http://apache.org/cordova/ns/plugins/1.0">
+    <name>AnkiDroid</name>
+    <js-module name="AnkiDroid" src="www/ankidroid.js">
+        <clobbers target="cordova.plugins.ankidroid" />
+    </js-module>
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="AnkiDroid">
+                <param name="android-package" value="com.example.ankidroid.AnkiDroid" />
+            </feature>
+        </config-file>
+        <source-file src="src/android/AnkiDroid.java" target-dir="src/com/example/ankidroid" />
+    </platform>
+</plugin>
