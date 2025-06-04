@@ -41,6 +41,7 @@
                         <button id="toggle-retime-buttons">Show Retiming Buttons</button>
                         <button id="save-unknown-words">Export Unknown Words</button>
                         <button id="load-unknown-words">Import Unknown Words</button>
+                        <button id="anki-config-button">Anki Settings</button>
                     </div>
                 </div>
                 <button id="toggle-subtitle-panel" class="toggle-subtitle-panel-button">
@@ -78,9 +79,24 @@
         </div>
     </div>
     <div id="dictionary-popup" class="dictionary-popup hidden">
-        <span id="dictionary-word"></span>: <span id="dictionary-meaning"></span>
+        <p><span id="dictionary-word"></span> (<span id="dictionary-reading"></span>)</p>
+        <p id="dictionary-meaning"></p>
+        <p id="dictionary-sentence" class="dictionary-sentence"></p>
         <button id="add-to-anki">Add to Anki</button>
         <button id="close-dictionary">Close</button>
+    </div>
+
+    <div id="anki-config-modal" class="modal">
+        <div class="modal-content">
+            <h3>AnkiDroid Settings</h3>
+            <label for="deck-name">Deck</label>
+            <input type="text" id="deck-name" />
+            <label for="model-name">Model</label>
+            <input type="text" id="model-name" />
+            <div id="fields-container"></div>
+            <button id="save-anki-config">Save</button>
+            <button id="close-anki-config">Close</button>
+        </div>
     </div>
     <script src="dictionary.js"></script>
     <script src="ankidroid.js"></script>

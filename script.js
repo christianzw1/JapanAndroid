@@ -26,6 +26,13 @@ const subtitlePanel = document.getElementById('subtitle-panel');
 const videoContainer = document.querySelector('.video-container');
 const enablePauseButton = document.getElementById('enable-pause');
 const disablePauseButton = document.getElementById('disable-pause');
+const ankiConfigButton = document.getElementById('anki-config-button');
+const ankiConfigModal = document.getElementById('anki-config-modal');
+const saveAnkiConfigButton = document.getElementById('save-anki-config');
+const closeAnkiConfigButton = document.getElementById('close-anki-config');
+const deckNameInput = document.getElementById('deck-name');
+const modelNameInput = document.getElementById('model-name');
+const fieldsContainer = document.getElementById('fields-container');
 
 let isFullScreen = false;
 let subtitles = [];
@@ -558,6 +565,53 @@ menuOptions.addEventListener('click', (event) => {
 subtitleList.addEventListener('dblclick', () => {
     const selection = window.getSelection().toString().trim();
     if (selection) {
-        showDictionary(selection);
+        const sentence = subtitles[currentSubtitleIndex] ? subtitles[currentSubtitleIndex].text : '';
+        showDictionary(selection, sentence);
     }
 });
+
+ankiConfigButton.addEventListener('click', () => {
+    deckNameInput.value = window.ankiSettings.deckName;
+    modelNameInput.value = window.ankiSettings.modelName;
+    window.getModelFields(modelNameInput.value, (fields) => {
+        window.ankiSettings.fields = fields;
+        renderFieldMapping();
+        ankiConfigModal.style.display = 'block';
+    });
+});
+
+closeAnkiConfigButton.addEventListener('click', () => {
+    ankiConfigModal.style.display = 'none';
+});
+
+saveAnkiConfigButton.addEventListener('click', () => {
+    window.ankiSettings.deckName = deckNameInput.value;
+    window.ankiSettings.modelName = modelNameInput.value;
+    document.querySelectorAll('#fields-container select').forEach(sel => {
+        window.ankiSettings.mapping[sel.dataset.type] = parseInt(sel.value, 10);
+    });
+    localStorage.setItem('ankiSettings', JSON.stringify(window.ankiSettings));
+    ankiConfigModal.style.display = 'none';
+});
+
+function renderFieldMapping() {
+    fieldsContainer.innerHTML = '';
+    const info = ['sentence', 'word', 'explanation'];
+    info.forEach(type => {
+        const label = document.createElement('label');
+        label.textContent = type.charAt(0).toUpperCase() + type.slice(1);
+        const select = document.createElement('select');
+        select.dataset.type = type;
+        window.ankiSettings.fields.forEach((f, idx) => {
+            const option = document.createElement('option');
+            option.value = idx;
+            option.textContent = f;
+            if (window.ankiSettings.mapping && window.ankiSettings.mapping[type] === idx) {
+                option.selected = true;
+            }
+            select.appendChild(option);
+        });
+        fieldsContainer.appendChild(label);
+        fieldsContainer.appendChild(select);
+    });
+}
